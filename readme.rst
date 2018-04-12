@@ -7,7 +7,7 @@ API для построения дерева
 URL
   /api
 Response
-  ..  code:: json
+  ..  code:: javascript
 
     // Список классов
     [
@@ -23,7 +23,7 @@ URL
 Args
   :id: Идентификатор класса
 Response
-  ..  code:: json
+  ..  code:: javascript
 
     // Список блоков класса
     [
@@ -40,12 +40,12 @@ Args
   :id: Идентификатор блока
   :all: Вывести все коды (включая неактуальные). Аргумент необязательный.
 Response
-  ..  code:: json
+  ..  code:: javascript
 
     // Список групп блока
     [
       {
-        "actual": true, // Параметр доступен только при указании аргумента ``all``
+        "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00",
         "has_subgroup": true, // есть ли у группы подргуппа
         "name": "Холера"
@@ -59,22 +59,22 @@ Args
   :code: Код группы
   :all: Вывести все коды (включая неактуальные). Аргумент необязательный.
 Response
-  ..  code:: json
+  ..  code:: javascript
 
     // Список подргуппы заданной группы
     [
       {
-        "actual": true, // Параметр доступен только при указании аргумента ``all``
+        "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00.0",
         "name": "Холера, вызванная холерным вибрионом 01, биовар cholerae"
       },
       {
-        "actual": true, // Параметр доступен только при указании аргумента ``all``
+        "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00.1",
         "name": "Холера, вызванная холерным вибрионом 01, биовар eltor"
       },
       {
-        "actual": true, // Параметр доступен только при указании аргумента ``all``
+        "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00.9",
         "name": "Холера неуточненная"
       }
@@ -95,7 +95,7 @@ Args
   :q: Строка поиска (обязательный аргумент). Если аргумент начинается на [a-z], то поиск осуществляется по кодам, иначе по названию
   :limit: Ограничение на количество выдаваемых кодов. Значение по-умолчанию: 50
 Response
-  ..  code:: json
+  ..  code:: javascript
 
     // http://localhost:5000/api/lookup?q=i&limit=1
     [
@@ -112,11 +112,11 @@ GET
 POST
   :[]: JSON-список кодов (пример ниже)
 Response
-  .. code:: json
+  .. code:: javascript
 
     // Оба запроса вернут одинаковый ответ
     // http://localhost:5000/api/fetch?codes=A00,A01
-    // curl -H "Content-Type: application/json;X-Requested-With: XMLHttpResponse" -X POST -d '["A00","A01"]' http://localhost:5000/api/fetch
+    // curl -H "Content-Type: application/javascript;X-Requested-With: XMLHttpResponse" -X POST -d '["A00","A01"]' http://localhost:5000/api/fetch
 
     [
       {
