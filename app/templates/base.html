@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ config.APP_NAME }}</title>
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body class="bg-secondary">
+  <script type="text/javascript">
+    baseURL = '{{ config.BASE_URL }}';
+  </script>
+  {% block body %}{% endblock %}
+</body>
+</html>

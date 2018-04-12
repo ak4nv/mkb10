@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{%- block body %}
+  <app></app>
+  {%- if config.DEBUG %}
+  <script type="text/javascript" src="https://unpkg.com/vue@2.5/dist/vue.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/build-dev.js') }}"></script>
+  {%- else %}
+  <script type="text/javascript" src="https://unpkg.com/vue@2.5/dist/vue.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/build.js') }}"></script>
+  {%- endif %}
+{%- endblock %}
