@@ -132,7 +132,7 @@ Response
   .. code:: javascript
 
     // Оба запроса вернут одинаковый ответ
-    // http://localhost:5000/api/fetch?codes=A00,A01
+    // curl http://localhost:5000/api/fetch?codes=A00,A01
     // curl -H "Content-Type: application/javascript;X-Requested-With: XMLHttpResponse" -X POST -d '["A00","A01"]' http://localhost:5000/api/fetch
 
     [
