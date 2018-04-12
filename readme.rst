@@ -1,6 +1,23 @@
 Международный классификатор болезней МКБ10
 ==========================================
 
+Установка
+---------
+
+..  code:: shell
+
+  git clone git@github.com:ak04nv/mkb10.git
+  cd mkb10
+  ./init_db.sh
+  virtualenv -p python3 --prompt="(mkb10) " .env
+  . .env/bin/activate
+  pip install -r requirements.txt
+  export FLASK_APP=wsgi.py
+  export FLASK_DEBUG=1
+  flask run
+
+Приложение будет доступно по адресу http://localhost:5000
+
 API для построения дерева
 -------------------------
 
