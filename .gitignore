@@ -1,0 +1,8 @@
+__pycache__
+.env
+*.lock
+*.log
+*.sublime-*
+frontend/node_modules
+settings.py
+db.sqlite
