@@ -8,6 +8,17 @@ from logging.handlers import SMTPHandler
 from importlib import import_module
 from datetime import date, time, datetime
 
+XHR_HDRS = (('Access-Control-Allow-Credentials', 'true'),
+            ('Access-Control-Allow-Methods', 'GET,POST'),
+            ('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With'))
+
+
+def add_xhr_headers(resp):
+    resp.headers.extend(XHR_HDRS)
+    if request.blueprint == 'api':
+        # Enable CORS for `api` blueprint
+        resp.headers.add('Access-Control-Allow-Origin',
+                         request.headers.get('Origin', '*'))
 
 def handle_error(e):
     err_name = getattr(e, 'name', 'Internal Server Error')

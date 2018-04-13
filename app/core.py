@@ -3,11 +3,8 @@ from flask import Flask, Response, abort, jsonify, request
 import os
 
 from config import db
-from app.utils import handle_error, register_blueprints, CustomJSONEncoder
-
-XHR_HDRS = (('Access-Control-Allow-Credentials', 'true'),
-            ('Access-Control-Allow-Methods', 'GET,POST'),
-            ('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With'))
+from app.utils import (add_xhr_headers, handle_error, register_blueprints,
+                       CustomJSONEncoder)
 
 
 def create_app():
@@ -25,16 +22,14 @@ def create_app():
     def early_response():
         if request.method == 'OPTIONS':
             # Early response for preflight request
-            return Response('Test passed')
+            resp = Response('Test passed')
+            add_xhr_headers(resp)
+            return resp
 
     @app.after_request
     def set_access_control_header(resp):
         if request.is_xhr:
-            resp.headers.extend(XHR_HDRS)
-            if request.blueprint == 'api':
-                # Enable CORS for `api` blueprint
-                resp.headers.add('Access-Control-Allow-Origin',
-                                 request.headers.get('Origin', '*'))
+            add_xhr_headers(resp)
         return resp
 
     if app.debug:
