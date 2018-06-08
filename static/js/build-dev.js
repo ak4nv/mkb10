@@ -2448,6 +2448,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2892,6 +2898,14 @@ module.exports = [{
   name: 'find',
   path: '/find',
   component: __webpack_require__(52)
+}, {
+  name: 'icdo',
+  path: '/icdo/block',
+  component: __webpack_require__(73)
+}, {
+  name: 'find-icdo',
+  path: '/icdo/find',
+  component: __webpack_require__(80)
 }];
 
 /***/ }),
@@ -20449,11 +20463,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         name: 'find'
       }
     }
-  }, [_c('a', [_vm._v("Поиск")])])], 1), _vm._v(" "), _c('br'), _vm._v(" "), _c('router-view')], 1)], 1)
+  }, [_c('a', [_vm._v("Поиск")])]), _vm._v(" "), _c('router-link', {
+    staticClass: "tab-item",
+    attrs: {
+      "tag": "li",
+      "to": {
+        name: 'icdo'
+      }
+    }
+  }, [_c('a', [_vm._v("Дерево МКБ-О")])]), _vm._v(" "), _c('router-link', {
+    staticClass: "tab-item",
+    attrs: {
+      "tag": "li",
+      "to": {
+        name: 'find-icdo'
+      }
+    }
+  }, [_c('a', [_vm._v("Поиск МКБ-О")])])], 1), _vm._v(" "), _c('br'), _vm._v(" "), _c('router-view')], 1)], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('h3', {
     staticClass: "text-center"
-  }, [_vm._v("Справочник МКБ10 "), _c('small', [_vm._v("(с обновлениями от 01.01.2015)")])])
+  }, [_vm._v("Справочник МКБ10 и МКБ-О "), _c('small', [_vm._v("(с обновлениями от 01.01.2015)")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -23375,6 +23405,393 @@ module.exports = function listToStyles (parentId, list) {
   return styles
 }
 
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_icdo_vue__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__block_icdo_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__block_icdo_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: { block: __WEBPACK_IMPORTED_MODULE_0__block_icdo_vue___default.a },
+  data: function data() {
+    return {
+      active: 0,
+      blocks: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    this.$http.get('/api/icdo/block').then(function (resp) {
+      return _this.blocks = resp.data;
+    });
+  }
+});
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)(true);
+// imports
+
+
+// module
+exports.push([module.i, "\ndiv {\n  min-height: 1.5rem\n}\n", "", {"version":3,"sources":["/home/ak04nv/projects/mkb10/frontend/src/components/icdo.vue?139605cb"],"names":[],"mappings":";AA8BA;EACA,kBAAA;CACA","file":"icdo.vue","sourcesContent":["<template>\n  <div>\n    <template v-for=\"item in blocks\">\n      <div :class=\"{'bg-primary': active == item.id}\">\n        <button class=\"btn btn-sm circle\" @click=\"active = item.id == active ? 0 : item.id\">\n          <i :class=\"['icon', active == item.id ? 'icon-arrow-down':'icon-arrow-up']\"></i>\n        </button>\n        <span v-text=\"item.name\"></span>\n      </div>\n      <block style=\"margin-left: 1rem;\" v-if=\"item.id == active\" :id=\"item.id\"></block>\n    </template>\n  </div>\n</template>\n<script>\n  import block from './block-icdo.vue'\n\n  export default {\n    components: { block },\n    data () {\n      return {\n        active: 0,\n        blocks: []\n      }\n    },\n    created () {\n      this.$http.get('/api/icdo/block').then(resp => this.blocks = resp.data)\n    }\n  }\n</script>\n<style>\n  div {\n    min-height: 1.5rem\n  }\n</style>"],"sourceRoot":""}]);
+
+// exports
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(75)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(71),
+  /* template */
+  __webpack_require__(74),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/ak04nv/projects/mkb10/frontend/src/components/icdo.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] icdo.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6f911f38", Component.options)
+  } else {
+    hotAPI.reload("data-v-6f911f38", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_vm._l((_vm.blocks), function(item) {
+    return [_c('div', {
+      class: {
+        'bg-primary': _vm.active == item.id
+      }
+    }, [_c('button', {
+      staticClass: "btn btn-sm circle",
+      on: {
+        "click": function($event) {
+          _vm.active = item.id == _vm.active ? 0 : item.id
+        }
+      }
+    }, [_c('i', {
+      class: ['icon', _vm.active == item.id ? 'icon-arrow-down' : 'icon-arrow-up']
+    })]), _vm._v(" "), _c('span', {
+      domProps: {
+        "textContent": _vm._s(item.name)
+      }
+    })]), _vm._v(" "), (item.id == _vm.active) ? _c('block', {
+      staticStyle: {
+        "margin-left": "1rem"
+      },
+      attrs: {
+        "id": item.id
+      }
+    }) : _vm._e()]
+  })], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6f911f38", module.exports)
+  }
+}
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(72);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(6)("596a0482", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6f911f38\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./icdo.vue", function() {
+     var newContent = require("!!../../node_modules/css-loader/index.js?sourceMap!../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6f911f38\",\"scoped\":false,\"hasInlineConfig\":false}!../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./icdo.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id'],
+  data: function data() {
+    return {
+      blocks: []
+    };
+  },
+  created: function created() {
+    this.get_data(this.id);
+  },
+
+  methods: {
+    get_data: function get_data(id) {
+      var _this = this;
+
+      this.$http.get('/api/icdo/block/' + id).then(function (resp) {
+        return _this.blocks = resp.data;
+      });
+    }
+  },
+  watch: {
+    id: function id(val) {
+      this.get_data(val);
+    }
+  }
+});
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(76),
+  /* template */
+  __webpack_require__(78),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/ak04nv/projects/mkb10/frontend/src/components/block-icdo.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] block-icdo.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-667f7738", Component.options)
+  } else {
+    hotAPI.reload("data-v-667f7738", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', _vm._l((_vm.blocks), function(item) {
+    return _c('div', [_vm._v("\n    ["), _c('span', {
+      domProps: {
+        "textContent": _vm._s(item.code)
+      }
+    }), _vm._v("]\n    "), _c('span', {
+      domProps: {
+        "textContent": _vm._s(item.name)
+      }
+    })])
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-667f7738", module.exports)
+  }
+}
+
+/***/ }),
+/* 79 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__typeahead_vue__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__typeahead_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__typeahead_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: { typeahead: __WEBPACK_IMPORTED_MODULE_1__typeahead_vue___default.a },
+  data: function data() {
+    return {
+      q: '',
+      items: [],
+      loading: false
+    };
+  },
+
+  methods: {
+    onReset: function onReset() {
+      this.q = '';
+      this.items = [];
+    },
+
+    onInput: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0_lodash__["debounce"])(function () {
+      var _this = this;
+
+      if (this.q.length > 1) {
+        this.$http.get('/api/icdo/lookup', { params: { q: this.q } }).then(function (resp) {
+          _this.items = resp.data;
+        });
+      }
+      if (this.q.length == 0) this.onReset();
+    }, 500)
+  },
+  watch: {
+    q: function q(val) {
+      if (!val) {
+        this.items = [];
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(79),
+  /* template */
+  __webpack_require__(81),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/home/ak04nv/projects/mkb10/frontend/src/components/find-icdo.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] find-icdo.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9cd577ec", Component.options)
+  } else {
+    hotAPI.reload("data-v-9cd577ec", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('typeahead', {
+    attrs: {
+      "placeholder": "Поиск по коду МКБ-О или названию",
+      "suggestions": _vm.items,
+      "loading": _vm.loading
+    },
+    on: {
+      "input": _vm.onInput,
+      "reset": _vm.onReset
+    },
+    model: {
+      value: (_vm.q),
+      callback: function($$v) {
+        _vm.q = $$v
+      },
+      expression: "q"
+    }
+  })
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-9cd577ec", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

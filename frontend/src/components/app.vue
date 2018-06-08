@@ -2,13 +2,19 @@
   <div class="container">
     <notifications :store="store" />
     <div class="col-7 col-mx-auto">
-      <h3 class="text-center">Справочник МКБ10 <small>(с обновлениями от 01.01.2015)</small></h3>
+      <h3 class="text-center">Справочник МКБ10 и МКБ-О <small>(с обновлениями от 01.01.2015)</small></h3>
       <ul class="tab">
         <router-link class="tab-item" tag="li" :to="{name: 'tree'}">
           <a>Дерево</a>
         </router-link>
         <router-link class="tab-item" tag="li" :to="{name: 'find'}">
           <a>Поиск</a>
+        </router-link>
+        <router-link class="tab-item" tag="li" :to="{name: 'icdo'}">
+          <a>Дерево МКБ-О</a>
+        </router-link>
+        <router-link class="tab-item" tag="li" :to="{name: 'find-icdo'}">
+          <a>Поиск МКБ-О</a>
         </router-link>
       </ul>
       <br>

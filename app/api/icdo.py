@@ -33,12 +33,12 @@ def lookup_icdo():
         return jsonify(err='bad_param', msg='missing required parameter: q')
     qs = (MKBO
           .select(MKBO.code, MKBO.name)
-          .where(MKB10.id_parent.is_null(False)))
+          .where(MKBO.id_parent.is_null(False)))
 
     if q.isdigit():
-        qs = qs.where(MKB10.code.startswith(q))
+        qs = qs.where(MKBO.code.startswith(q))
     else:
-        qs = qs.where(MKB10.name.contains(q))
+        qs = qs.where(MKBO.name.contains(q))
 
     limit = request.args.get('limit', '50')
     qs = qs.limit(int(limit) if limit.isdigit() else 50)
