@@ -1,3 +1,4 @@
+from peewee import fn
 from flask import jsonify, request
 from app.models import MKBO
 
@@ -38,7 +39,7 @@ def lookup_icdo():
     if q.isdigit():
         qs = qs.where(MKBO.code.startswith(q))
     else:
-        qs = qs.where(MKBO.name_lower.contains(q.lower()))
+        qs = qs.where(fn.lower_case(MKBO.name).contains(q.lower()))
 
     limit = request.args.get('limit', '50')
     qs = qs.limit(int(limit) if limit.isdigit() else 50)

@@ -14,6 +14,11 @@ def create_app():
     app.name = app.config.get('APP_NAME', 'app')
 
     db.init_app(app)
+    @db.database.func('lower_case')
+    def lower_case(value):
+        return value.lower()
+
+
     register_blueprints(app, 'app')
 
     app.json_encoder = CustomJSONEncoder

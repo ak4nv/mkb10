@@ -1,4 +1,5 @@
 import re
+from peewee import fn
 from flask import jsonify, request
 from app.models import MKB10
 
@@ -25,7 +26,7 @@ def lookup_icd():
     if re.match('[a-z]', q[0], re.IGNORECASE):
         qs = qs.where(MKB10.code.startswith(q))
     else:
-        qs = qs.where(MKB10.name_lower.contains(q.lower()))
+        qs = qs.where(fn.lower_case(MKB10.name).contains(q.lower()))
 
     limit = request.args.get('limit', '50')
     qs = qs.limit(int(limit) if limit.isdigit() else 50)
