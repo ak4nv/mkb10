@@ -12,10 +12,10 @@ cat schema.sql | sqlite3 $DB
 (echo .mode csv; echo .import $MKB mkb10) | sqlite3 $DB
 
 # Convert empty fields to NULL value
-for field in 'id_parent_id' 'code' 'date'; do
+for field in 'parent_id' 'code' 'date'; do
   echo "update mkb10 set $field = NULL where length($field) = 0;" | sqlite3 $DB
 done
-for field in 'id_parent_id' 'code'; do
+for field in 'parent_id' 'code'; do
   echo "update mkbo set $field = NULL where length($field) = 0;" | sqlite3 $DB
 done
 

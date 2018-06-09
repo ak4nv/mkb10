@@ -6,7 +6,7 @@ from app.models import MKB10
 def get_classes():
     qs = (MKB10
           .select(MKB10.id, MKB10.name)
-          .where(MKB10.id_parent >> None)
+          .where(MKB10.parent >> None)
           .where(MKB10.code >> None))
     return jsonify(tuple(qs.dicts()))
 
@@ -15,7 +15,7 @@ def get_blocks(cls):
     qs = (MKB10
           .select(MKB10.id, MKB10.name)
           .where(MKB10.code >> None)
-          .where(MKB10.id_parent == cls))
+          .where(MKB10.parent == cls))
     return jsonify(tuple(qs.dicts()))
 
 
@@ -24,9 +24,9 @@ def get_group(block):
     qs = (MKB10
           .select(MKB10.code, MKB10.name,
                   (fn.count(Alias.id) > 0).alias('ct'))
-          .join(Alias, JOIN.LEFT_OUTER, on=(Alias.id_parent == MKB10.id))
-          .where(MKB10.id_parent == block)
-          .group_by(Alias.id_parent))
+          .join(Alias, JOIN.LEFT_OUTER, on=(Alias.parent == MKB10.id))
+          .where(MKB10.parent == block)
+          .group_by(Alias.parent))
     qs = actual_filter(qs)
     return jsonify([f(x) for x in qs.dicts()])
 

@@ -5,14 +5,14 @@ from app.models import MKBO
 def get_icdo_blocks():
     qs = (MKBO
           .select(MKBO.id, MKBO.name)
-          .where(MKBO.id_parent >> None))
+          .where(MKBO.parent >> None))
     return jsonify(tuple(qs.dicts()))
 
 
 def get_icdo_block(id):
     qs = (MKBO
           .select(MKBO.code, MKBO.name)
-          .where(MKBO.id_parent == id))
+          .where(MKBO.parent == id))
     return jsonify(tuple(qs.dicts()))
 
 
@@ -33,12 +33,12 @@ def lookup_icdo():
         return jsonify(err='bad_param', msg='missing required parameter: q')
     qs = (MKBO
           .select(MKBO.code, MKBO.name)
-          .where(MKBO.id_parent.is_null(False)))
+          .where(MKBO.parent.is_null(False)))
 
     if q.isdigit():
         qs = qs.where(MKBO.code.startswith(q))
     else:
-        qs = qs.where(MKBO.name.contains(q))
+        qs = qs.where(MKBO.name_lower.contains(q.lower()))
 
     limit = request.args.get('limit', '50')
     qs = qs.limit(int(limit) if limit.isdigit() else 50)
