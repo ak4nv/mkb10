@@ -1,5 +1,5 @@
 import re
-from peewee import fn
+from peewee import fn, JOIN
 from flask import jsonify, request
 from app.models import MKB10
 
@@ -19,9 +19,21 @@ def lookup_icd():
     q = request.args.get('q')
     if not q:
         return jsonify(err='bad_param', msg='missing required parameter: q')
-    qs = (MKB10.select(MKB10.name, MKB10.code)
+
+    # gets parents of subgroups for exclude from results
+    subq = (MKB10
+            .select(MKB10.parent)
+            .where(MKB10.actual == True)
+            .where(MKB10.code.is_null(False))
+            .group_by(MKB10.parent)
+            .having(fn.count(MKB10.parent) > 0)
+            .alias('subq'))
+
+    qs = (MKB10
+          .select(MKB10.name, MKB10.code)
           .where(MKB10.actual == True)
-          .where(MKB10.code.is_null(False)))
+          .where(MKB10.code.is_null(False))
+          .where(MKB10.id.not_in(subq)))
 
     if re.match('[a-z]', q[0], re.IGNORECASE):
         qs = qs.where(MKB10.code.startswith(q))
