@@ -26,7 +26,8 @@ def get_group(block):
                   (fn.count(Alias.id) > 0).alias('ct'))
           .join(Alias, JOIN.LEFT_OUTER, on=(Alias.parent == MKB10.id))
           .where(MKB10.parent == block)
-          .group_by(Alias.parent))
+          .group_by(Alias.parent)
+          .order_by(MKB10.code))
     qs = actual_filter(qs)
     return jsonify([f(x) for x in qs.dicts()])
 
