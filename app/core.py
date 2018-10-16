@@ -9,7 +9,7 @@ from app.utils import add_xhr_headers, handle_error, register_blueprints
 def create_app():
     app = Flask(__name__, root_path=os.getcwd(), template_folder='static')
     app.config.from_object('config.default')
-    app.config.from_pyfile('../settings.py', silent=True)
+    app.config.from_pyfile('settings.py', silent=True)
     app.name = app.config.get('APP_NAME', 'app')
 
     db.init_app(app)
