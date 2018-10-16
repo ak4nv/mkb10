@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/components/notifications/store'
 
 // Add header for all queries
-axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL || window.baseURL
 //axios.defaults.withCredentials = true
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.post['Content-Type'] = 'text/plain'
