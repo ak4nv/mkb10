@@ -12,8 +12,7 @@
   virtualenv -p python3 --prompt="(mkb10) " .env
   . .env/bin/activate
   pip install -r requirements.txt
-  export FLASK_APP=wsgi.py
-  export FLASK_DEBUG=1
+  export FLASK_ENV=development
   flask run
 
 Приложение будет доступно по адресу http://localhost:5000
@@ -64,6 +63,7 @@ Response
       {
         "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00",
+        "id": "3",
         "has_subgroup": true, // есть ли у группы подргуппа
         "name": "Холера"
       },
@@ -83,16 +83,19 @@ Response
       {
         "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00.0",
+        "id": "4",
         "name": "Холера, вызванная холерным вибрионом 01, биовар cholerae"
       },
       {
         "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00.1",
+        "id": "5",
         "name": "Холера, вызванная холерным вибрионом 01, биовар eltor"
       },
       {
         "actual": true, // Параметр доступен только при указании аргумента 'all'
         "code": "A00.9",
+        "id": "6",
         "name": "Холера неуточненная"
       }
     ]
@@ -126,10 +129,12 @@ Response
     [
       {
         "code": "8140/0",
+        "id": "107",
         "name": "Аденома БДУ"
       },
       {
         "code": "8140/1",
+        "id": "108",
         "name": "Аденома бронхиальных желез БДУ (D38.1)"
       },
       // ...

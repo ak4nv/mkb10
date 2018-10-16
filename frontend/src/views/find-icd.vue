@@ -6,11 +6,9 @@
     v-model="q"
     @input="onInput"
     @reset="onReset" />
-  </div>
 </template>
 <script>
-  import { debounce } from 'lodash'
-  import typeahead from './typeahead.vue'
+  import typeahead from '@/components/typeahead.vue'
 
   export default {
     components: { typeahead },
@@ -20,32 +18,32 @@
         items: [],
         loading: false,
         map: {
-        'Й': 'Q',
-        'Ц': 'W',
-        'У': 'E',
-        'К': 'R',
-        'Е': 'T',
-        'Н': 'Y',
-        'Г': 'U',
-        'Ш': 'I',
-        'Щ': 'O',
-        'З': 'P',
-        'Ф': 'A',
-        'Ы': 'S',
-        'В': 'D',
-        'А': 'F',
-        'П': 'G',
-        'Р': 'H',
-        'О': 'J',
-        'Л': 'K',
-        'Д': 'L',
-        'Я': 'Z',
-        'Ч': 'X',
-        'С': 'C',
-        'М': 'V',
-        'И': 'B',
-        'Т': 'N',
-        'Ь': 'M'
+          'Й': 'Q',
+          'Ц': 'W',
+          'У': 'E',
+          'К': 'R',
+          'Е': 'T',
+          'Н': 'Y',
+          'Г': 'U',
+          'Ш': 'I',
+          'Щ': 'O',
+          'З': 'P',
+          'Ф': 'A',
+          'Ы': 'S',
+          'В': 'D',
+          'А': 'F',
+          'П': 'G',
+          'Р': 'H',
+          'О': 'J',
+          'Л': 'K',
+          'Д': 'L',
+          'Я': 'Z',
+          'Ч': 'X',
+          'С': 'C',
+          'М': 'V',
+          'И': 'B',
+          'Т': 'N',
+          'Ь': 'M'
         }
       }
     },
@@ -54,14 +52,13 @@
         this.q = ''
         this.items = []
       },
-      onInput: debounce(function() {
+      onInput () {
         if (this.q.length > 1) {
           this.$http
             .get('/api/lookup', {params: {q: this.q}})
             .then(resp => { this.items = resp.data })
-        }
-        if (this.q.length == 0) this.onReset()
-      }, 500)
+        } else if (this.q.length == 0) { this.onReset() }
+      }
     },
     watch: {
       q (val) {

@@ -10,4 +10,4 @@ def main_page():
 
 @bp.route('/<path:path>')
 def redir(path):
-    return redirect('/')
+    return redirect('/#/{}'.format(path))

@@ -12,7 +12,7 @@ def get_icdo_blocks():
 
 def get_icdo_block(id):
     qs = (MKBO
-          .select(MKBO.code, MKBO.name)
+          .select(MKBO.id, MKBO.code, MKBO.name)
           .where(MKBO.parent == id))
     return jsonify(tuple(qs.dicts()))
 

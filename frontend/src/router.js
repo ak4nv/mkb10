@@ -1,8 +1,24 @@
-import VueRouter from 'vue-router'
+import Vue from 'vue'
+import Router from 'vue-router'
+import routes from './views'
+import Page404 from './page404'
 
-const routes = require('./routes.js')
-const router = new VueRouter({ routes })
+Vue.use(Router)
 
-router.options.linkActiveClass = 'active'
-
-module.exports = router
+export default new Router({
+  linkActiveClass: 'active',
+  routes: [
+    {
+      path: '/',
+      redirect: '/icd/tree',
+      children: routes,
+      component: {
+        render (c) { return c('router-view') }
+      }
+    },
+    {
+      path: '*',
+      component: Page404
+    }
+  ]
+})

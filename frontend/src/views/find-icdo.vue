@@ -6,11 +6,9 @@
     v-model="q"
     @input="onInput"
     @reset="onReset" />
-  </div>
 </template>
 <script>
-  import { debounce } from 'lodash'
-  import typeahead from './typeahead.vue'
+  import typeahead from '@/components/typeahead.vue'
 
   export default {
     components: { typeahead },
@@ -26,14 +24,13 @@
         this.q = ''
         this.items = []
       },
-      onInput: debounce(function() {
+      onInput () {
         if (this.q.length > 1) {
           this.$http
             .get('/api/icdo/lookup', {params: {q: this.q}})
             .then(resp => { this.items = resp.data })
-        }
-        if (this.q.length == 0) this.onReset()
-      }, 500)
+        } else if (this.q.length == 0) { this.onReset() }
+      }
     },
     watch: {
       q (val) {

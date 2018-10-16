@@ -22,7 +22,7 @@ def get_blocks(cls):
 def get_group(block):
     Alias = MKB10.alias()
     qs = (MKB10
-          .select(MKB10.code, MKB10.name,
+          .select(MKB10.id, MKB10.code, MKB10.name,
                   (fn.count(Alias.id) > 0).alias('ct'))
           .join(Alias, JOIN.LEFT_OUTER, on=(Alias.parent == MKB10.id))
           .where(MKB10.parent == block)
@@ -34,7 +34,7 @@ def get_group(block):
 
 def get_subgroup(group):
     qs = (MKB10
-          .select(MKB10.code, MKB10.name)
+          .select(MKB10.id, MKB10.code, MKB10.name)
           .where(MKB10.code.startswith(group + '.')))
     qs = actual_filter(qs)
     return jsonify(tuple(qs.dicts()))

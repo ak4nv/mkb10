@@ -1,11 +1,15 @@
-// // Vue is a global object linked via script tag
+import Vue from 'vue'
+import app from './app.vue'
+import router from './router'
+import VueAxios from './vue-axios'
+import Notifications from './components/notifications'
 
-import VueAxios from './vue-axios.js'
 Vue.use(VueAxios)
+Vue.mixin(Notifications)
 
-const notification_mixin = require('./notifications/mixin.js')
-Vue.mixin(notification_mixin)
+Vue.config.productionTip = false
 
-Vue.component('app', require('./components/app.vue'))
-const router = require('./router.js')
-const app = new Vue({ router }).$mount('app')
+new Vue({
+  router,
+  render: h => h(app)
+}).$mount('#app')

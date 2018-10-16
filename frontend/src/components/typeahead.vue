@@ -10,12 +10,12 @@
       :placeholder="placeholder"
       :value="value"
       :disabled="loading"
-      @input="$emit('input', $event.target.value)"
+      @input="onInput($event.target.value)"
       @keydown.esc="reset" />
-    <div
-      v-for="(item, index) in suggestions"
-      :class="{'selected': index == current}"
-      v-html="render(item)" />
+    <div v-for="(item, index) in suggestions"
+         :class="{'selected': index == current}"
+         v-html="render(item)"
+         :key="index" />
   </div>
 </template>
 <script>
@@ -29,6 +29,10 @@
         type: Boolean,
         required: false
       },
+      delay: {
+        type: Number,
+        default: 500
+      },
       suggestions: {
         type: Array,
         required: true,
@@ -40,6 +44,7 @@
     },
     data () {
       return {
+        debounce: null,
         tooltip: null,
         current: -1,
       }
@@ -48,12 +53,18 @@
       this.focus()
     },
     methods: {
+      onInput (v) {
+        if (this.debounce) {
+          clearTimeout(this.debounce)
+        }
+        this.debounce = setTimeout(() => { this.$emit('input', v) }, this.delay)
+      },
       reset () {
         this.$emit('reset')
         this.focus()
       },
       render (item) {
-        return `<span class="name">${this.highlight(item.name)}</span> <small class="float-right">[${this.highlight(item.code)}]</small>`
+        return `<span class="name">${this.highlight(item.name)}</span> <small class="text-success float-right">[${this.highlight(item.code)}]</small>`
       },
       highlight (val) {
         var re = new RegExp("(" + this.value.split(' ').join('|') + ")", "gi");

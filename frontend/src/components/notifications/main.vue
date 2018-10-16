@@ -4,12 +4,15 @@
   </div>
 </template>
 <script>
-  import notification from './notification.vue'
+  import notification from './item.vue'
+  import store from './store'
 
   export default {
-    props: ['store'],
-    components: {
-      notification
+    components: { notification },
+    data () {
+      return {
+        store: store
+      }
     },
     methods: {
       remove (item) {

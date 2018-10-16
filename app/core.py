@@ -1,27 +1,24 @@
-from flask import Flask, Response, abort, jsonify, request
+from flask import Flask, Response, request
 
 import os
 
 from config import db
-from app.utils import (add_xhr_headers, handle_error, register_blueprints,
-                       CustomJSONEncoder)
+from app.utils import add_xhr_headers, handle_error, register_blueprints
 
 
 def create_app():
-    app = Flask(__name__, static_folder='../static')
+    app = Flask(__name__, root_path=os.getcwd(), template_folder='static')
     app.config.from_object('config.default')
     app.config.from_pyfile('../settings.py', silent=True)
     app.name = app.config.get('APP_NAME', 'app')
 
     db.init_app(app)
+
     @db.database.func('lower_case')
     def lower_case(value):
         return value.lower()
 
-
     register_blueprints(app, 'app')
-
-    app.json_encoder = CustomJSONEncoder
 
     @app.before_request
     def early_response():
@@ -47,13 +44,5 @@ def create_app():
 
     for e in (401, 403, 404, 500):
         app.errorhandler(e)(handle_error)
-
-    @app.url_defaults
-    def versioning_static_files(endpoint, values):
-        filename = values.get('filename')
-        if endpoint == 'static' and filename:
-            fp = os.path.join(app.static_folder, filename)
-            if os.path.exists(fp):
-                values['_'] = int(os.stat(fp).st_mtime)
 
     return app

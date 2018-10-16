@@ -10,10 +10,10 @@
   export default {
     props: ['notification'],
     mounted () {
-      if (this.notification.timeout)
+      if (this.notification.delay)
         setTimeout(function () {
           this.remove(this.notification)
-        }.bind(this), this.notification.delay)
+        }.bind(this), this.notification.delay * 1000)
     },
     methods: {
       remove (item) {

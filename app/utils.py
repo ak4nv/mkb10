@@ -1,5 +1,4 @@
 from flask import current_app, jsonify, request, render_template
-from flask.json import JSONEncoder
 
 import os
 import logging
@@ -19,6 +18,7 @@ def add_xhr_headers(resp):
         # Enable CORS for `api` blueprint
         resp.headers.add('Access-Control-Allow-Origin',
                          request.headers.get('Origin', '*'))
+
 
 def handle_error(e):
     err_name = getattr(e, 'name', 'Internal Server Error')
@@ -43,18 +43,6 @@ def register_blueprints(app, bps_dir):
         if hasattr(m, 'bp'):
             # app.logger.debug('Registered blueprint `{}`'.format(d))
             app.register_blueprint(m.bp, **getattr(m, 'options', {}))
-
-
-class CustomJSONEncoder(JSONEncoder):
-
-    def default(self, obj):
-        if isinstance(obj, datetime):
-            return obj.strftime('%Y-%m-%d %H:%M')
-        if isinstance(obj, date):
-            return obj.isoformat()
-        if isinstance(obj, time):
-            return obj.strftime('%H:%M')
-        return super().default(obj)
 
 
 def get_mail_handler(app):

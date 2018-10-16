@@ -7,7 +7,4 @@ ADMINS = ('admin@example.com',)
 JSON_AS_ASCII = False
 
 DATABASE_URL = 'sqlite:///db.sqlite'
-
-# URL prefix for ajax requests
-# https://github.com/axios/axios#request-config
-BASE_URL = ''
+BASE_URL = '/'

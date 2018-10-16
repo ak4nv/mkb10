@@ -1,40 +1,36 @@
-const NotificationStore = require('./store.js')
+import NotificationStore from './store.js'
 
-module.exports = {
+export default {
   methods: {
-    $notify (text, options = {}) {
+    $info (text, options = {}) {
       NotificationStore.add(Object.assign({
         type: 'primary',
         text,
-        timeout: true,
-        delay: 2000,
+        delay: 2
       }, options))
     },
 
     $error (text, options = {}) {
       NotificationStore.add(Object.assign({
-        type: 'error', 
-        text,
-        timeout: false,
+        type: 'error',
+        text
       }, options))
     },
 
     $warn (text, options = {}) {
       NotificationStore.add(Object.assign({
-        type: 'warning', 
+        type: 'warning',
         text,
-        timeout: true,
-        delay: 5000, //optional, default: 3000
+        delay: 5
       }, options))
     },
 
     $success (text, options = {}) {
       NotificationStore.add(Object.assign({
-        type: 'success', 
+        type: 'success',
         text,
-        timeout: true, 
-        delay: 2000 //optional, default: 3000
+        delay: 2
       }, options))
-    },
+    }
   }
 }

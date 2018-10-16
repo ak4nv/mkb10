@@ -1,11 +1,11 @@
-const axios = require('axios')
-const NotificationStore = require('./notifications/store.js')
+import axios from 'axios'
+import store from '@/components/notifications/store'
 
 // Add header for all queries
-axios.defaults.baseURL = baseURL;
-//axios.defaults.withCredentials = true;
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-axios.defaults.headers.post['Content-Type'] = 'text/plain';
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
+//axios.defaults.withCredentials = true
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.headers.post['Content-Type'] = 'text/plain'
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
@@ -13,7 +13,7 @@ axios.interceptors.request.use(function (config) {
     if (typeof(axios._this.loading) != 'undefined') {
       axios._this.loading = true
     }
-    NotificationStore.clean()
+    store.clean()
     return config;
   }, function (error) {
     // Do something with request error
@@ -40,22 +40,11 @@ axios.interceptors.response.use(function (resp) {
     return Promise.reject(error);
   });
 
-function plugin(Vue) {
-
-    if (plugin.installed) {
-        return;
+export default function (Vue) {
+  Object.defineProperty(Vue.prototype, '$http', {
+    get () {
+      axios._this = this
+      return axios
     }
-
-  Object.defineProperties(Vue.prototype, {
-
-    $http: {
-      get() {
-        axios._this = this
-        return axios
-      }
-    }
-
-  });
+  })
 }
-
-export default plugin;
