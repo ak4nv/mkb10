@@ -5,7 +5,9 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def main_page():
-    prefix = request.script_root.lstrip('/') + '/'
+    prefix = ''
+    if request.script_root:
+        prefix = request.script_root.lstrip('/') + '/'
     return render_template('index.html', BASE_URL=prefix)
 
 
