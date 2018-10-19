@@ -3,7 +3,7 @@ const path = require('path')
 
 module.exports = {
   baseUrl: process.env.NODE_ENV === 'production'
-    ? '/{{ config.BASE_URL.lstrip(\'/\') }}static'
+    ? '/{{ BASE_URL }}static'
     : '/',
   // assetsDir: 'static',
   outputDir: '../static',

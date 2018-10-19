@@ -7,4 +7,3 @@ ADMINS = ('admin@example.com',)
 JSON_AS_ASCII = False
 
 DATABASE_URL = 'sqlite:///db.sqlite'
-BASE_URL = '/'
