@@ -5,8 +5,8 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def main_page():
-    return render_template('index.html',
-                           BASE_URL=request.script_root.lstrip('/'))
+    prefix = request.script_root.lstrip('/') + '/'
+    return render_template('index.html', BASE_URL=prefix)
 
 
 @bp.route('/<path:path>')
