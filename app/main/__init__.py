@@ -1,14 +1,11 @@
-from flask import Blueprint, render_template, redirect, request
+from flask import Blueprint, render_template, redirect
 
 bp = Blueprint('main', __name__)
 
 
 @bp.route('/')
 def main_page():
-    prefix = ''
-    if request.script_root:
-        prefix = request.script_root.lstrip('/') + '/'
-    return render_template('index.html', BASE_URL=prefix)
+    return render_template('index.html')
 
 
 @bp.route('/<path:path>')
