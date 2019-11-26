@@ -30,18 +30,18 @@ def handle_error(e):
     return render_template('%s.html' % err_code, name=err_name), err_code
 
 
-def register_blueprints(app, bps_dir):
-    app_dir = os.path.join(os.getcwd(), bps_dir)
+def register_blueprints(app):
+    app_dir = os.path.join(app.root_path, app.import_name)
     listdir = (name for name in os.listdir(app_dir)
                if os.path.isdir(os.path.join(app_dir, name)))
     for d in listdir:
         try:
-            m = import_module('.'.join((bps_dir, d)))
+            m = import_module('.'.join((app.import_name, d)))
         except (ImportError, TypeError) as e:
-            app.logger.exception(e)
-            continue
+            if app.debug:
+                raise e
         if hasattr(m, 'bp'):
-            # app.logger.debug('Registered blueprint `{}`'.format(d))
+            # app.logger.debug(f'Registered blueprint `{d}`')
             app.register_blueprint(m.bp, **getattr(m, 'options', {}))
 
 
