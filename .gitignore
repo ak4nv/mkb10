@@ -5,5 +5,4 @@ __pycache__
 *.log
 *.sublime-*
 frontend/node_modules
-settings.py
 db.sqlite
