@@ -16,11 +16,10 @@ def create_app(config=None):
     db.init_app(app)
     utils.register_blueprints(app)
 
-    for key, value in (('foreign_keys', 'ON'),
-                       ('encoding', '"UTF-8"'),
-                       ('journal_mode', 'OFF'),
-                       ('synchronous', 'OFF')):
-        db.database.pragma(key, value, permanent=True)
+    db.database._pragmas = (('foreign_keys', 'ON'),
+                            ('encoding', '"UTF-8"'),
+                            ('journal_mode', 'OFF'),
+                            ('synchronous', 'OFF'))
 
     @db.database.func('lower_case')
     def lower_case(value):
