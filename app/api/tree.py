@@ -20,16 +20,20 @@ def get_blocks(cls):
 
 
 def get_group(block):
-    Alias = MKB10.alias()
+    Child = MKB10.alias()
     qs = (MKB10
           .select(MKB10.id, MKB10.code, MKB10.name,
-                  (fn.count(Alias.id) > 0).alias('ct'))
-          .join(Alias, JOIN.LEFT_OUTER, on=(Alias.parent == MKB10.id))
+                  (fn.count(Child.id) > 0).alias('ct'))
+          .join(Child, JOIN.LEFT_OUTER, on=(Child.parent == MKB10.id))
           .where(MKB10.parent == block)
           .group_by(MKB10.id)
           .order_by(MKB10.code))
     qs = actual_filter(qs)
-    return jsonify([f(x) for x in qs.dicts()])
+    # A little magic: `update()` method of dict always returns `None`
+    # It means we always get `None or x` and return an updated dict
+    result = map(lambda x: x.update(has_subgroup=bool(x.pop('ct'))) or x,
+                 qs.dicts())
+    return jsonify(tuple(result))
 
 
 def get_subgroup(group):
@@ -41,13 +45,8 @@ def get_subgroup(group):
 
 
 def actual_filter(qs):
-    if not 'all' in request.args:
-        qs = qs.where(MKB10.actual == True)
-    else:
-        qs = qs.select_extend(MKB10.actual)
-    return qs
-
-
-def f(obj):
-    obj.update(has_subgroup=bool(obj.pop('ct')))
-    return obj
+    # If the keyword in the args we add an actual flag to result set
+    if 'all' in request.args:
+        return qs.select_extend(MKB10.actual)
+    # Otherwise we filter the result by actual flag
+    return qs.where(MKB10.actual == True)
