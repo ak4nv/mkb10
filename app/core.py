@@ -39,8 +39,7 @@ def create_app(config=None):
 
     if app.debug:
         if app.config.get('DEBUG_SQL', False):
-            from app.utils import enable_sql_dump
-            enable_sql_dump(app)
+            utils.enable_sql_dump(app)
     else:
         app.logger.addHandler(utils.get_mail_handler(app))
 
