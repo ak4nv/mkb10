@@ -4,13 +4,16 @@
 Установка
 ---------
 
+Для создания виртуального окружения используется пакет `python3-venv <https://docs.python.org/3/library/venv.html>`_
+В debian-based дистрибутивах оформлен отдельным пакетом и устанавливается дополнительно ``apt-get install python3-venv``
+
 ..  code:: shell
 
   git clone git@github.com:ak04nv/mkb10.git
   cd mkb10
   ./init_db.sh
-  virtualenv -p python3 --prompt="(mkb10) " .env
-  . .env/bin/activate
+  python3 -m venv .venv
+  . .venv/bin/activate
   pip install -r requirements.txt
   export FLASK_ENV=development
   flask run
