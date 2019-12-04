@@ -4,8 +4,8 @@
 Установка
 ---------
 
-Для создания виртуального окружения используется пакет `python3-venv <https://docs.python.org/3/library/venv.html>`_
-В debian-based дистрибутивах оформлен отдельным пакетом и устанавливается дополнительно ``apt-get install python3-venv``
+Для создания виртуального окружения используется библиотека `python3-venv <https://docs.python.org/3/library/venv.html>`_,
+которая в debian-based дистрибутивах оформлена отдельным пакетом и устанавливается дополнительно ``apt-get install python3-venv``
 
 ..  code:: shell
 
