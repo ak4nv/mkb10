@@ -4,19 +4,14 @@
 Установка
 ---------
 
-Для создания виртуального окружения используется библиотека `python3-venv <https://docs.python.org/3/library/venv.html>`_,
-которая в debian-based дистрибутивах оформлена отдельным пакетом и устанавливается дополнительно ``apt-get install python3-venv``
+Для быстрой установки проека используйте утилиту `uv <https://docs.astral.sh/uv/getting-started/installation/>`_, доступную для установки в большинстве популярных дистрибутивов как из официальных репозиториев, так и через скрипт установки, доступный на сайте разработчика. 
 
 ..  code:: shell
 
-  git clone git@github.com:ak04nv/mkb10.git
+  git clone git@github.com:ak4nv/mkb10.git
   cd mkb10
-  ./init_db.sh
-  python3 -m venv .venv
-  . .venv/bin/activate
-  pip install -r requirements.txt
-  export FLASK_ENV=development
-  flask run
+  make
+  make run
 
 Приложение будет доступно по адресу http://localhost:5000
 

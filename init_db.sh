@@ -4,7 +4,7 @@ MKB="mkb10.csv"
 MKBO="mkbo.csv"
 
 # Delete current base and create the new one
-rm $DB
+rm -f $DB
 cat schema.sql | sqlite3 $DB
 
 # Dump data to database from csv files

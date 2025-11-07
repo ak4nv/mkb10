@@ -1,0 +1,12 @@
+[project]
+name = "mkb10"
+version = "0.1.0"
+description = "Классификатор МКБ10 и МКБО"
+readme = "README.rst"
+requires-python = ">=3.12"
+dependencies = [
+    "flask==1.1.4",
+    "markupsafe==1.1.1",
+    "peewee==3.12.0",
+    "werkzeug==0.16.1",
+]
