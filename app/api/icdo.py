@@ -18,10 +18,10 @@ def get_icdo_block(id):
 
 
 def fetch_icdo():
-    codes = list(filter(bool, request.args.get('codes', '').split(','))) \
+    codes = list(filter(bool, request.args.get("codes", "").split(","))) \
         or request.get_json()
     if not codes:
-        return jsonify(err='bad_param', msg='missing required parameter: codes')
+        return jsonify(err="bad_param", msg="missing required parameter: codes")
     qs = (MKBO
           .select(MKBO.code, MKBO.name)
           .where(MKBO.code << codes))
@@ -29,9 +29,9 @@ def fetch_icdo():
 
 
 def lookup_icdo():
-    q = request.args.get('q')
+    q = request.args.get("q")
     if not q:
-        return jsonify(err='bad_param', msg='missing required parameter: q')
+        return jsonify(err="bad_param", msg="missing required parameter: q")
     qs = (MKBO
           .select(MKBO.code, MKBO.name)
           .where(MKBO.parent.is_null(False)))
@@ -39,9 +39,9 @@ def lookup_icdo():
     if q.isdigit():
         qs = qs.where(MKBO.code.startswith(q))
     else:
-        qs = qs.where(fn.lower_case(MKBO.name).contains(q.lower()))
+        qs = qs.where(fn.lower(MKBO.name).contains(q.lower()))
 
-    limit = request.args.get('limit', '50')
+    limit = request.args.get("limit", "50")
     qs = qs.limit(int(limit) if limit.isdigit() else 50)
 
     return jsonify(tuple(qs.dicts()))

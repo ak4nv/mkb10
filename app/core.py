@@ -3,22 +3,18 @@ import os
 from flask import Flask, request
 
 from app import utils
-from config import db
+from app.models import db
 
 
 def create_app(config=None):
     app = Flask("app", root_path=os.getcwd(), template_folder="static")
-    app.config.from_object("config.settings")
+    app.config.from_object("config")
     if config:
         app.config.update(config)
     app.name = app.config.get("APP_NAME", "app")
 
     db.init_app(app)
     utils.register_blueprints(app)
-
-    @db.database.func("lower_case")
-    def lower_case(value):
-        return value.lower()
 
     @app.before_request
     def early_response():

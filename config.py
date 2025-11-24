@@ -8,4 +8,3 @@ DATABASE = {
         "synchronous": 0,
     }
 }
-# JSON_AS_ASCII = False

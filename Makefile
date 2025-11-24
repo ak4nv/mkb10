@@ -1,3 +1,5 @@
+name = mkb10
+
 all: build
 
 uv:
@@ -16,9 +18,18 @@ build: uv
 	@uv sync
 
 shell: uv
-	@uv run python
+	@uv run flask shell
 
 run: db.sqlite uv
 	@uv run flask run --debug
+
+image-build:
+	@podman build --dns=1.1.1.1 -t $(name):dev .
+
+image-run: image-build
+	@podman run --rm \
+	-p 5000:5000 \
+	--name $(name) \
+	$(name):dev
 
 .PHONY: uv
