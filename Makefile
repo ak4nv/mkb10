@@ -15,10 +15,10 @@ db.sqlite:
 build: uv
 	@uv sync
 
-repl: uv
+shell: uv
 	@uv run python
 
 run: db.sqlite uv
-	@FLASK_ENV=development uv run flask run
+	@uv run flask run --debug
 
 .PHONY: uv
