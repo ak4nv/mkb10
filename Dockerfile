@@ -22,10 +22,11 @@ RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
     uv sync --locked --no-editable
 
 COPY static ./static
-COPY config.py wsgi.py ./
 
 ENV PATH="/app/.venv/bin:$PATH"
 
 COPY app ./app
 
-CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "wsgi:app"]
+EXPOSE 5000
+
+CMD ["gunicorn", "-w", "2", "-b", ":5000", "app:app"]

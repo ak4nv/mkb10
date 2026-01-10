@@ -6,12 +6,9 @@ from app import utils
 from app.models import db
 
 
-def create_app(config=None):
+def create_app(config):
     app = Flask("app", root_path=os.getcwd(), template_folder="static")
-    app.config.from_object("config")
-    if config:
-        app.config.update(config)
-    app.name = app.config.get("APP_NAME", "app")
+    app.config.from_pyfile(config)
 
     db.init_app(app)
     utils.register_blueprints(app)
