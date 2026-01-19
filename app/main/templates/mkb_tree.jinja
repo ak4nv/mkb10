@@ -1,0 +1,109 @@
+{% extends "content.jinja" %}
+
+{% block header %}Дерево МКБ-10{% endblock %}
+
+{% block content %}
+
+  <style>
+    .mb-0 {
+      margin-bottom: 0 !important;
+    }
+    .ml-3 {
+      margin-left: .4rem;
+      padding-left: .8rem;
+      border-left: .05rem solid #aaa;
+    }
+  </style>
+
+  <div
+    hx-get="/api?all"
+    hx-swap="outerHTML"
+    hx-trigger="load"
+    mustache-array-template="class"></div>
+
+  {% raw %}
+
+  <template id="class">
+    {{#data}}
+    <div class="accordion"
+      hx-get="/api/{{id}}?all"
+      hx-trigger="click once"
+      hx-target="#group-{{id}}"
+      mustache-array-template="group">
+        <input
+          type="checkbox"
+          id="accordion-{{id}}-class"
+          name="accordion-checkbox"
+          hidden>
+        <label
+          class="accordion-header c-hand"
+          for="accordion-{{id}}-class">
+            <i class="icon icon-arrow-right mr-1"></i>
+            {{name}}
+        </label>
+        <div id="group-{{id}}" class="accordion-body ml-2 mb-0"></div>
+    </div>
+    {{/data}}
+  </template>
+
+  <template id="group">
+    {{#data}}
+      <div class="accordion"
+        hx-get="/api/{{id}}/group?all"
+        hx-swap="innerHTML"
+        hx-trigger="click once"
+        hx-target="#subgroup-{{id}}"
+        mustache-array-template="subgroup">
+          <input
+            type="radio"
+            id="accordion-{{id}}-group"
+            name="accordion-group"
+            hidden>
+          <label
+            class="accordion-header c-hand"
+            for="accordion-{{id}}-group">
+              <i class="icon icon-arrow-right mr-1"></i>
+              {{name}}
+          </label>
+        <div id="subgroup-{{id}}" class="accordion-body ml-2 mb-0"></div>
+      </div>
+    {{/data}}
+  </template>
+
+  <template id="subgroup">
+      {{#data}}
+        {{#has_subgroup}}
+          <div class="accordion"
+            hx-get="/api/{{code}}/subgroup?all"
+            hx-swap="innerHTML"
+            hx-trigger="click once"
+            hx-target="#group-{{id}}"
+            mustache-array-template="subgroup">
+              <input
+                type="radio"
+                id="accordion-{{id}}-subgroup"
+                name="accordion-subgroup"
+                hidden>
+              <label
+                class="accordion-header c-hand"
+                for="accordion-{{id}}-subgroup">
+                  <i class="icon icon-arrow-right mr-1"></i>
+                  <span class="text-success">[{{code}}]</span> {{name}}
+              </label>
+              <div id="group-{{id}}" class="accordion-body ml-2 mb-0"></div>
+          </div>
+        {{/has_subgroup}}
+        {{^has_subgroup}}
+          {{^actual}}<del>{{/actual}}
+            <div class="ml-3">
+              <span class="text-success">[{{code}}]</span>
+              {{name}}
+            </div>
+          {{^actual}}</del>{{/actual}}
+        {{/has_subgroup}}
+      {{/data}}
+  </template>
+
+  {% endraw %}
+
+{% endblock %}

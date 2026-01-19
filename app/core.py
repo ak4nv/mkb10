@@ -7,7 +7,7 @@ from app.models import db
 
 
 def create_app(config):
-    app = Flask("app", root_path=os.getcwd(), template_folder="static")
+    app = Flask("app", root_path=os.getcwd())
     app.config.from_pyfile(config)
 
     db.init_app(app)

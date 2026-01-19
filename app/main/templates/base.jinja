@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ config.APP_NAME }}</title>
+  <link rel="stylesheet" href="https://unpkg.com/@spectre-org/spectre-css@latest/dist/spectre.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@spectre-org/spectre-css@latest/dist/spectre-icons.min.css">
+  <script src="https://unpkg.com/htmx.org@2.0.8"></script>
+  <script src="https://unpkg.com/htmx-ext-client-side-templates@2.0.0/client-side-templates.js"></script>
+  <script src="https://unpkg.com/mustache@latest"></script>
+  <script src="https://unpkg.com/marked@latest/lib/marked.umd.js"></script>
+  <style>
+    .columns {
+      min-height: 100vh;
+    }
+
+    .column {
+      padding-top: 16px;
+    }
+
+    aside > nav {
+      top: 16px;
+      padding-right: 16px;
+    }
+  </style>
+</head>
+<body class="container">
+  <div class="columns">
+
+    <aside class="column col-3 bg-gray">
+      <nav class="float-right p-sticky">
+        <div
+          class="text-bold text-large c-hand"
+          hx-get="/readme"
+          hx-trigger="click, load"
+          hx-on::after-request="setActive(this)"
+          hx-target="#content">
+          Справочники
+        </div>
+        <div class="divider"></div>
+        <ul class="nav">
+          <li class="divider" data-content="МКБ-10"></li>
+          <li class="nav-item">
+            <a
+              class="c-hand"
+              hx-get="{{ url_for("main.mkb_tree_page") }}"
+              hx-on::after-request="setActive(this)"
+              hx-target="#content">Дерево</a></li>
+          <li class="nav-item">
+            <a
+              class="c-hand"
+              hx-get="{{ url_for("main.mkb_page") }}"
+              hx-on::after-request="setActive(this)"
+              hx-target="#content">Поиск</a></li>
+          <li class="nav-item"></li>
+          <li class="divider" data-content="МКБ-О"></li>
+          <li class="nav-item">
+            <a
+              class="c-hand"
+              hx-get="{{ url_for("main.mkbo_tree_page") }}"
+              hx-on::after-request="setActive(this)"
+              hx-target="#content">Дерево</a></li>
+          <li class="nav-item">
+            <a
+              class="c-hand"
+              hx-get="{{ url_for("main.mkbo_page") }}"
+              hx-on::after-request="setActive(this)"
+              hx-target="#content">Поиск</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <div id="content" class="column"></div>
+
+  </div>
+
+  <script>
+    {# Prepare custom marked renderer for readme #}
+    const renderer = new marked.Renderer();
+    renderer.code = function({ lang, raw, text, type }) {
+      return `<pre class="code bg-gray" data-lang="${lang}"><code>${text}</code></pre>`;
+    };
+    marked.use({ renderer });
+
+    {# Set active menu element #}
+    function setActive(el) {
+      const currentActive = htmx.find(".nav-item.active");
+      if (currentActive) {
+        htmx.removeClass(currentActive, "active");
+      }
+      htmx.addClass(htmx.closest(el, "li"), "active");
+    };
+
+  </script>
+
+</body>
+</html>

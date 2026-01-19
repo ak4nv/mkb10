@@ -1,0 +1,10 @@
+{% extends "content.jinja" %}
+
+{% block header %}Документация{% endblock %}
+
+{% block content %}
+  <div id="readme">Loading...</div>
+  <script>
+    document.getElementById("readme").innerHTML = marked.parse({{ readme|tojson|safe }});
+  </script>
+{% endblock %}

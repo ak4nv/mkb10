@@ -1,0 +1,39 @@
+{% extends "content.jinja" %}
+
+{% block header %}Поиск МКБ-10{% endblock %}
+
+{% block content %}
+
+  <div class="has-icon-right">
+    <input
+      class="form-input"
+      name="q"
+      autofocus
+      placeholder="Введите код или ключевое слово"
+      hx-get="/api/lookup"
+      hx-disabled-elt="this"
+      hx-on::before-request="if (this.value.length < 2) event.preventDefault()"
+      hx-on::after-request="this.focus()"
+      hx-trigger="input changed delay:300ms, keyup[key=='Enter']"
+      hx-target="#search-results"
+      hx-indicator=".htmx-indicator"
+      mustache-array-template="template-results">
+    <i class="form-icon loading htmx-indicator"></i>
+  </div>
+
+  <ul id="search-results" class="nav"></ul>
+
+  {% raw %}
+
+  <template id="template-results">
+    {{#data}}
+      <li class="nav-item">
+        <span class="text-success">[{{code}}]</span>
+        {{name}}
+      </li>
+    {{/data}}
+  </template>
+
+  {% endraw %}
+
+{% endblock %}

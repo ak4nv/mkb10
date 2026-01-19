@@ -1,0 +1,44 @@
+{% extends "content.jinja" %}
+
+{% block header %}Дерево МКБ-О{% endblock %}
+
+{% block content %}
+
+  <div
+    hx-get="/api/icdo/block"
+    hx-swap="outerHTML"
+    hx-trigger="load"
+    mustache-array-template="blocks"></div>
+
+  {% raw %}
+
+  <template id="blocks">
+    {{#data}}
+    <details class="accordion"
+      hx-get="/api/icdo/block/{{id}}"
+      hx-trigger="toggle once"
+      hx-target="#block-{{id}}"
+      mustache-array-template="block">
+        <summary class="accordion-header c-hand">
+          <i class="icon icon-arrow-right mr-1"></i>
+          {{name}}
+        </summary>
+        <div id="block-{{id}}" class="accordion-body"></div>
+    </details>
+    {{/data}}
+  </template>
+
+  <template id="block">
+    <ul class="menu">
+      {{#data}}
+        <li class="menu-item">
+          <span class="text-success">[{{code}}]</span>
+          {{name}}
+        </li>
+      {{/data}}
+    </ul>
+  </template>
+
+  {% endraw %}
+
+{% endblock %}

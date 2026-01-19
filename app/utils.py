@@ -1,10 +1,9 @@
 import os
 import logging
 
-from logging.handlers import SMTPHandler
 from importlib import import_module
 
-from flask import jsonify, request, render_template
+from flask import jsonify, request
 
 XHR_HDRS = (("Access-Control-Allow-Credentials", "true"),
             ("Access-Control-Allow-Methods", "GET,POST"))
@@ -35,7 +34,6 @@ def register_blueprints(app):
             if app.debug:
                 raise e
         if hasattr(m, "bp"):
-            # app.logger.debug(f"Registered blueprint `{d}`")
             app.register_blueprint(m.bp, **getattr(m, "options", {}))
 
 
