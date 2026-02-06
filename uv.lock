@@ -155,12 +155,20 @@ dependencies = [
     { name = "peewee" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "sqlite-web" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "flask", specifier = "==3.1.2" },
     { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "peewee", specifier = "==3.18.3" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "sqlite-web", specifier = ">=0.7.0" }]
 
 [[package]]
 name = "packaging"
@@ -176,6 +184,29 @@ name = "peewee"
 version = "3.18.3"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/6f/60/58e7a307a24044e0e982b99042fcd5a58d0cd928d9c01829574d7553ee8d/peewee-3.18.3.tar.gz", hash = "sha256:62c3d93315b1a909360c4b43c3a573b47557a1ec7a4583a71286df2a28d4b72e", size = 3026296, upload-time = "2025-11-03T16:43:46.678Z" }
+
+[[package]]
+name = "pygments"
+version = "2.19.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b0/77/a5b8c569bf593b0140bde72ea885a803b82086995367bf2037de0159d924/pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887", size = 4968631, upload-time = "2025-06-21T13:39:12.283Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b", size = 1225217, upload-time = "2025-06-21T13:39:07.939Z" },
+]
+
+[[package]]
+name = "sqlite-web"
+version = "0.7.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "flask" },
+    { name = "peewee" },
+    { name = "pygments" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f6/4c/e3de2e32e05915246057c0b9321d05c5449936573492af9714fb4017ead3/sqlite_web-0.7.0.tar.gz", hash = "sha256:fad11b8d8b4a7f7410930e0f9a956b6af5615cc0d22b5701682304ff07b980ef", size = 772516, upload-time = "2026-01-29T17:26:07.917Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cf/03/921ab784ed4ee2ca47d1847e232f974933679f5b1794f13d6af43d1ca249/sqlite_web-0.7.0-py3-none-any.whl", hash = "sha256:97baff6f7ac8fd61e0e7f0a052f2bf0a84bdd17a0b9863c0956f4e600b03b587", size = 780298, upload-time = "2026-01-29T17:26:06.644Z" },
+]
 
 [[package]]
 name = "werkzeug"

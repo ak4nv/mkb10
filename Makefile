@@ -23,6 +23,9 @@ shell: uv
 run: db.sqlite uv
 	@FLASK_DEBUG=1 uv run flask run
 
+inspect.db:
+	@uv run sqlite_web db.sqlite
+
 image-build:
 	@podman build --dns=1.1.1.1 -t $(name):dev .
 

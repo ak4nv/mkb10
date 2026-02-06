@@ -9,3 +9,8 @@ dependencies = [
     "gunicorn>=23.0.0",
     "peewee==3.18.3",
 ]
+
+[dependency-groups]
+dev = [
+    "sqlite-web>=0.7.0",
+]
