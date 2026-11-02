@@ -5,9 +5,9 @@ description = "Классификатор МКБ10 и МКБО"
 readme = "README.rst"
 requires-python = ">=3.12"
 dependencies = [
-    "flask==3.1.2",
+    "flask>=3.1.2",
     "gunicorn>=23.0.0",
-    "peewee==3.18.3",
+    "peewee==4.5.3",
 ]
 
 [dependency-groups]
