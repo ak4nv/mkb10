@@ -10,7 +10,7 @@ cat schema.sql | sqlite3 $db
 # Dump data to database from csv files
 for table in mkb10 mkbo; do
   file="resources/$(eval echo \$${table})"
-  sqlite3 $db -cmd ".mode csv" ".separator ;" ".import --skip 1 $file $table"
+  sqlite3 $db -cmd ".mode csv" ".separator \";\"" ".import --skip 1 $file $table"
 done
 
 # Convert empty fields to NULL value
