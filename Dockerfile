@@ -21,7 +21,7 @@ COPY uv.lock pyproject.toml ./
 RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
     uv sync --locked --no-editable
 
-COPY static ./static
+COPY README.md ./README.md
 
 ENV PATH="/app/.venv/bin:$PATH"
 
