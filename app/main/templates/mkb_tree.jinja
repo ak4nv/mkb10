@@ -31,9 +31,9 @@
       hx-target="#group-{{id}}"
       mustache-array-template="group">
         <input
-          type="checkbox"
+          type="radio"
           id="accordion-{{id}}-class"
-          name="accordion-checkbox"
+          name="accordion-class"
           hidden>
         <label
           class="accordion-header c-hand"
@@ -57,7 +57,7 @@
           <input
             type="radio"
             id="accordion-{{id}}-group"
-            name="accordion-group"
+            name="accordion-group-{{parent}}"
             hidden>
           <label
             class="accordion-header c-hand"
@@ -71,37 +71,37 @@
   </template>
 
   <template id="subgroup">
-      {{#data}}
-        {{#has_subgroup}}
-          <div class="accordion"
-            hx-get="/api/{{code}}/subgroup?all"
-            hx-swap="innerHTML"
-            hx-trigger="click once"
-            hx-target="#group-{{id}}"
-            mustache-array-template="subgroup">
-              <input
-                type="radio"
-                id="accordion-{{id}}-subgroup"
-                name="accordion-subgroup"
-                hidden>
-              <label
-                class="accordion-header c-hand"
-                for="accordion-{{id}}-subgroup">
-                  <i class="icon icon-arrow-right mr-1"></i>
-                  <span class="text-success">[{{code}}]</span> {{name}}
-              </label>
-              <div id="group-{{id}}" class="accordion-body ml-2 mb-0"></div>
+    {{#data}}
+      {{#has_subgroup}}
+        <div class="accordion"
+          hx-get="/api/{{id}}/group?all"
+          hx-swap="innerHTML"
+          hx-trigger="click once"
+          hx-target="#group-{{id}}"
+          mustache-array-template="subgroup">
+            <input
+              type="radio"
+              id="accordion-{{id}}-subgroup"
+              name="accordion-subgroup-{{parent}}"
+              hidden>
+            <label
+              class="accordion-header c-hand"
+              for="accordion-{{id}}-subgroup">
+                <i class="icon icon-arrow-right mr-1"></i>
+                <span class="text-success">[{{code}}]</span> {{name}}
+            </label>
+            <div id="group-{{id}}" class="accordion-body ml-2 mb-0"></div>
+        </div>
+      {{/has_subgroup}}
+      {{^has_subgroup}}
+        {{^actual}}<del>{{/actual}}
+          <div class="ml-3">
+            <span class="text-success">[{{code}}]</span>
+            {{name}}
           </div>
-        {{/has_subgroup}}
-        {{^has_subgroup}}
-          {{^actual}}<del>{{/actual}}
-            <div class="ml-3">
-              <span class="text-success">[{{code}}]</span>
-              {{name}}
-            </div>
-          {{^actual}}</del>{{/actual}}
-        {{/has_subgroup}}
-      {{/data}}
+        {{^actual}}</del>{{/actual}}
+      {{/has_subgroup}}
+    {{/data}}
   </template>
 
   {% endraw %}

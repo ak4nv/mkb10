@@ -20,7 +20,7 @@ def get_blocks(cls):
 def get_group(block):
     Child = MKB10.alias()
     qs = (MKB10
-          .select(MKB10.id, MKB10.code, MKB10.name,
+          .select(MKB10.id, MKB10.code, MKB10.name, MKB10.parent,
                   fn.iif(Child.id, True, False).alias("has_subgroup"))
           .join(Child, JOIN.LEFT_OUTER, on=(Child.parent == MKB10.id))
           .where(MKB10.parent == block)
